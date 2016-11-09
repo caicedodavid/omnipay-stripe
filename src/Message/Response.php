@@ -177,6 +177,20 @@ class Response extends AbstractResponse
 
         return null;
     }
+    
+    /**
+     * Get the cards from the response of fetchCustomer
+     *
+     * @return array|null
+     */
+    public function getSources()
+    {
+        if (isset($this->data['sources']) && $this->data['sources']['object'] == 'list') {
+            return $this->data['sources']['data'];
+        }
+
+        return null;
+    }
 
     /**
      * Get the subscription reference from the response of CreateSubscriptionRequest.
