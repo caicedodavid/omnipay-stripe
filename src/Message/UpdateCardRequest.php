@@ -28,17 +28,20 @@ class UpdateCardRequest extends AbstractRequest
         $this->validate('customerReference');
 
         $data = array();
-        $data['description'] = $this->getDescription();
 
         if ($this->getSource()) {
+            $data['description'] = $this->getDescription();
             $data['source'] = $this->getSource();
         } elseif ($this->getToken()) {
+            $data['description'] = $this->getDescription();
             $data['source'] = $this->getToken();
+        } elseif ($this->getCard() and !$this->getDescription()) {
+            $data = $this->getCardData();
         } elseif ($this->getCard()) {
+            $data['description'] = $this->getDescription();
             $data['source'] = $this->getCardData();
             $data['email'] = $this->getCard()->getEmail();
-        }
-
+        } 
         return $data;
     }
 
