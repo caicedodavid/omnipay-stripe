@@ -61,7 +61,9 @@ class UpdateCustomerRequest extends AbstractRequest
     {
         $this->validate('customerReference');
         $data = array();
-        $data['description'] = $this->getDescription();
+        if ($this->getDescription()) {
+            $data['description'] = $this->getDescription();
+        }
 
         if ($this->getToken()) {
             $data['card'] = $this->getToken();
@@ -71,6 +73,9 @@ class UpdateCustomerRequest extends AbstractRequest
             $data['email'] = $this->getCard()->getEmail();
         } elseif ($this->getEmail()) {
             $data['email'] = $this->getEmail();
+        } elseif ($this->getCardReference()) {
+            $this->validate('cardReference');
+            $data['default_source'] = $this->getCardReference();
         }
 
         if ($this->getMetadata()) {
